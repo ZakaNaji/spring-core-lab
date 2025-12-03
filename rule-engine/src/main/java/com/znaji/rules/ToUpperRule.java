@@ -14,10 +14,13 @@ public class ToUpperRule implements Rule {
 
     @Override
     public RuleResult execute(RuleContext context) {
-        String text = context.getString("text");
-        if (text == null) {
+        String input = context.getString("text");
+        if (input == null) {
             return RuleResult.fail("Missing field: text");
         }
-        return RuleResult.ok(text.toUpperCase());
+        String output = input.toUpperCase();
+        context.put("text", output);
+
+        return RuleResult.ok(output);
     }
 }
