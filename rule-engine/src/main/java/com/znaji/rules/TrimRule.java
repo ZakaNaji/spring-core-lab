@@ -14,11 +14,13 @@ public class TrimRule implements Rule {
 
     @Override
     public RuleResult execute(RuleContext context) {
-        String text = context.getString("text");
-        if (text == null) {
+        String input = context.getString("text");
+        if (input == null) {
             return RuleResult.fail("Missing field: text");
         }
+        String output = input.trim();
+        context.put("text", output);
 
-        return RuleResult.ok(text.trim());
+        return RuleResult.ok(output);
     }
 }
