@@ -1,0 +1,27 @@
+package com.znaji.core;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RuleContext {
+
+    private final Map<String, Object> data = new HashMap<>();
+
+    public void put(String key, Object value) {
+        data.put(key, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T get(String key) {
+        return (T) data.get(key);
+    }
+
+    public String getString(String key) {
+        Object v = data.get(key);
+        return v == null ? null : v.toString();
+    }
+
+    public Map<String, Object> asMap() {
+        return data;
+    }
+}
