@@ -1,9 +1,11 @@
 package com.znaji;
 
+import com.znaji.core.RuleChain;
 import com.znaji.core.RuleContext;
 import com.znaji.core.RuleEngine;
 import com.znaji.core.RuleResult;
 import com.znaji.core.config.CoreConfig;
+import com.znaji.dsl.DslParser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -20,20 +22,18 @@ public class App
 
             //Rule engine:
             RuleEngine engine = ctx.getBean(RuleEngine.class);
+            DslParser parser = ctx.getBean(DslParser.class);
 
             RuleContext context = new RuleContext();
-            context.put("text", "   Hello World!   ");
-            RuleResult result1 = engine.execute("trim", context);
-            System.out.println("Trim result: " + result1.getOutput());
+            context.put("text", "   HELLO   ");
 
-            RuleContext ctx2 = new RuleContext();
-            ctx2.put("text", "hello");
-            RuleResult result2 = engine.execute("to-upper", ctx2);
-            System.out.println("Uppercase result: " + result2.getOutput());
+            // Example chain
+            String chainInput = "cleanup: trim -> to-upper";
+            RuleChain chain = parser.parse(chainInput);
 
-            RuleContext ctx3 = new RuleContext();
-            RuleResult result3 = engine.execute("non-existing", ctx3);
-            System.out.println("Missing rule result: " + result3.getErrorMessage());
+            RuleResult result = engine.executeChain(chain, context);
+
+            System.out.println("Final result: " + result.getOutput());
         }
     }
 }
