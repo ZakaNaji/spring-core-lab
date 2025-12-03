@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {
         "com.znaji.core",
         "com.znaji.rules",
-        "com.znaji.events"
+        "com.znaji.events",
+        "com.znaji.dsl"
 })
 public class CoreConfig {
 }
