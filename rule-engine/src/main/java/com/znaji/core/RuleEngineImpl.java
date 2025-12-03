@@ -1,8 +1,6 @@
 package com.znaji.core;
 
-import com.znaji.events.RuleCompletedEvent;
-import com.znaji.events.RuleFailedEvent;
-import com.znaji.events.RuleStartedEvent;
+import com.znaji.events.*;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -53,5 +51,28 @@ public class RuleEngineImpl implements RuleEngine {
         }
 
         return result;
+    }
+
+    @Override
+    public RuleResult executeChain(RuleChain chain, RuleContext context) {
+        publisher.publishEvent(new ChainStartedEvent(this, chain, context));
+
+        RuleResult lastResult = null;
+        for (String ruleName : chain.getRuleNames()) {
+            lastResult = execute(ruleName, context);
+            if (!lastResult.isSuccess()) {
+                publisher.publishEvent(
+                        new ChainFailedEvent(this, chain, context, lastResult)
+                );
+                return lastResult;
+            }
+            context.put(ruleName + ".result", lastResult.getOutput());
+        }
+
+        publisher.publishEvent(
+                new ChainCompletedEvent(this, chain, context, lastResult)
+        );
+
+        return lastResult;
     }
 }
