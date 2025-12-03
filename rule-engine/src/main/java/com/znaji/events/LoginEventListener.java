@@ -21,4 +21,27 @@ public class LoginEventListener {
                 + " - error=" + event.getResult().getErrorMessage());
     }
 
+    @EventListener
+    public void onChainStarted(ChainStartedEvent event) {
+        System.out.println(
+                "[Event] ChainStarted: " + event.getChain().getName() +
+                        " | Rules: " + String.join(" -> ", event.getChain().getRuleNames())
+        );
+    }
+
+    @EventListener
+    public void onChainCompleted(ChainCompletedEvent event) {
+        System.out.println(
+                "[Event] ChainCompleted: " + event.getChain().getName()
+        );
+    }
+
+    @EventListener
+    public void onChainFailed(ChainFailedEvent event) {
+        System.out.println(
+                "[Event] ChainFailed: " + event.getChain().getName() +
+                        " | error=" + event.getResult().getErrorMessage()
+        );
+    }
+
 }
