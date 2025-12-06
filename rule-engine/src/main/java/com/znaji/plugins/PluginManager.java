@@ -1,5 +1,7 @@
 package com.znaji.plugins;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.DirectoryStream;
@@ -8,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PluginManager {
 
     private static final String PLUGIN_DIR = "plugins";
