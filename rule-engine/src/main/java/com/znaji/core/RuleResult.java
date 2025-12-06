@@ -31,4 +31,12 @@ public class RuleResult {
     public String getErrorMessage() {
         return errorMessage;
     }
+    @Override
+    public String toString() {
+        if (success) {
+            return "SUCCESS: " + output;
+        }
+        return "ERROR: " + errorMessage;
+    }
+
 }

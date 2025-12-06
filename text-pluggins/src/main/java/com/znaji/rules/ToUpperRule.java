@@ -5,6 +5,8 @@ import com.znaji.core.RuleContext;
 import com.znaji.core.RuleResult;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class ToUpperRule implements Rule {
     @Override
@@ -22,5 +24,10 @@ public class ToUpperRule implements Rule {
         context.put("text", output);
 
         return RuleResult.ok(output);
+    }
+
+    @Override
+    public Set<String> requiredInputs() {
+        return Set.of("text");
     }
 }
