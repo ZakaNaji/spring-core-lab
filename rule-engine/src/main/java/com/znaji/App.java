@@ -4,6 +4,7 @@ import com.znaji.core.*;
 import com.znaji.core.config.CoreConfig;
 import com.znaji.dsl.DslParser;
 import com.znaji.plugins.PluginManager;
+import com.znaji.shell.CliRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.net.URISyntaxException;
@@ -18,12 +19,8 @@ public class App {
             ctx.register(CoreConfig.class);
             ctx.refresh();
 
-            RuleContext context = new RuleContext();
-            context.put("text", "  Test  ");
-            Map<String, Rule> rules = ctx.getBeansOfType(Rule.class);
-            for (Rule rule : rules.values()) {
-                System.out.println(rule.execute(context).getOutput());
-            }
+            CliRunner cli = ctx.getBean(CliRunner.class);
+            cli.start();
         }
     }
 }
